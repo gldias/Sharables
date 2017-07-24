@@ -16,7 +16,7 @@ import java.util.List;
  */
 
 public class RecipeListAdapter extends ArrayAdapter<Recipe> {
-    //TODO: Change this to use the Recipe class
+    //TODO: Change this to use database
 
     private int layoutResource;
 

@@ -19,6 +19,7 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity {
 
     public final static String EXTRA_MESSAGE = "com.hugehard.sharables.MESSAGE";
+    List<Recipe> recipeList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,19 +28,17 @@ public class MainActivity extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
-        List<Recipe> recipeList = new ArrayList<>();
-
         //Test recipes
         String testTitle = "Bananas";
         String testAuthor = "Gui";
         int testTime = 20;
 
-        Map<String, String> testIngredients = new HashMap<>();
+        HashMap<String, String> testIngredients = new HashMap<>();
         testIngredients.put("Bananas", "2 pieces");
 
         String testPreparation = "Buy some bananas";
 
-        LinkedList<String> testSteps = new LinkedList<>();
+        ArrayList<String> testSteps = new ArrayList<>();
         testSteps.add("Take some bananas");
         testSteps.add("Eat them!");
 
@@ -80,11 +79,30 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(MainActivity.this, RecipeDetailsActivity.class);
-                String message = "test";
-                intent.putExtra(EXTRA_MESSAGE, message);
+                //Get the recipe at item position
+                Recipe recipe = recipeList.get(position);
+
+                //Get recipe data
+                String title = recipe.getTitle();
+                String author = recipe.getAuthor();
+                int time = recipe.getCookTime();
+                HashMap<String, String> ingredients = recipe.getIngredients();
+                String preparation = recipe.getPreparation();
+                ArrayList<String> steps = recipe.getSteps();
+
+                //Send recipe data to RecipeDetails Activity
+                intent.putExtra("title", title);
+                intent.putExtra("author", author);
+                intent.putExtra("time", time);
+                intent.putExtra("ingredients", ingredients);
+                intent.putExtra("preparation", preparation);
+                intent.putExtra("steps", steps);
+
+                //Start RecipeDetailsActivity
                 startActivity(intent);
             }
         });
 
     }
+
 }

@@ -6,6 +6,7 @@ package com.hugehard.sharables;
 
 import android.media.Image;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -20,12 +21,12 @@ public class Recipe {
     private String author;
     private int cookTime; //The cook time is represented in minutes
     private Image recipeImg;
-    private Map<String, String> ingredients; //Key: ingredient; Value: quantity
+    private HashMap<String, String> ingredients; //Key: ingredient; Value: quantity
     private String preparation;
-    private LinkedList<String> steps;
+    private ArrayList<String> steps;
 
-    public Recipe(String title, String author, int cookTime, Map<String, String> ingredients,
-                  String preparation, LinkedList<String> steps){
+    public Recipe(String title, String author, int cookTime, HashMap<String, String> ingredients,
+                  String preparation, ArrayList<String> steps){
         this.title = title;
         this.author = author;
         this.cookTime = cookTime;
@@ -75,11 +76,11 @@ public class Recipe {
         this.recipeImg = recipeImg;
     }
 
-    public Map<String, String> getIngredients() {
+    public HashMap<String, String> getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(Map<String, String> ingredients) {
+    public void setIngredients(HashMap<String, String> ingredients) {
         this.ingredients = ingredients;
     }
 
@@ -91,11 +92,11 @@ public class Recipe {
         this.preparation = preparation;
     }
 
-    public LinkedList<String> getSteps() {
+    public ArrayList<String> getSteps() {
         return steps;
     }
 
-    public void setSteps(LinkedList<String> steps) {
+    public void setSteps(ArrayList<String> steps) {
         this.steps = steps;
     }
 
