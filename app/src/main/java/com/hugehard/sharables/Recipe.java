@@ -14,6 +14,7 @@ import java.util.Map;
 
 public class Recipe {
     //TODO: Fix the way you store images
+    //TODO: change ingredients to be a set
 
     //Date is assigned at object creation (when recipe is uploaded)
     private Date dateCreated = new Date();
