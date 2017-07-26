@@ -8,6 +8,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -32,13 +34,13 @@ public class RecipeDetailsActivity extends AppCompatActivity {
 
         //Set preparation header text
         TextView preparationHeader = (TextView)findViewById(R.id.preparation_header);
-        preparationHeader.setText("How to prepare:");
+        underlineText("How to prepare:", preparationHeader);
         //Set ingredient header text
         TextView ingredientHeader = (TextView)findViewById(R.id.ingredients_header);
-        ingredientHeader.setText("What you will need:");
+        underlineText("What you will need:", ingredientHeader);
         //Set steps header text
         TextView stepsHeader = (TextView)findViewById(R.id.steps_header);
-        stepsHeader.setText("Steps:");
+        underlineText("Steps", stepsHeader);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -109,5 +111,11 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         }
 
         return data;
+    }
+
+    public void underlineText(String text, TextView textView) {
+        SpannableString content = new SpannableString(text);
+        content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+        textView.setText(content);
     }
 }

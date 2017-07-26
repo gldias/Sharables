@@ -23,21 +23,23 @@
 
             <ImageView
                 android:id="@+id/recipeDetailsImage"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:padding="5dp" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:gravity="bottom"
+                android:paddingBottom="13dp">
 
                 <TextView
                     android:id="@+id/recipeDetailsTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Medium Text goes here"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Large Text goes here"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="5dp"
                     android:padding="2dp"
@@ -67,44 +69,53 @@
             android:id="@+id/preparation_header"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@android:color/black"
             android:text="Text goes here"
             android:layout_marginTop="10dp"
-            android:paddingLeft="20dp"
+            android:paddingLeft="30dp"
             android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/preparation"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingLeft="10dp"
+            android:textAppearance="?android:attr/textAppearanceListItem"
+            android:paddingLeft="16dp"
             android:text="Text goes here" />
 
         <TextView
             android:id="@+id/ingredients_header"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@android:color/black"
             android:text="Text goes here"
             android:layout_marginTop="10dp"
-            android:paddingLeft="20dp"
+            android:paddingLeft="30dp"
             android:textStyle="bold"/>
         <ListView
             android:id="@+id/ingredients_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:listSelector="@android:color/transparent">
         </ListView>
 
         <TextView
             android:id="@+id/steps_header"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@android:color/black"
             android:text="Text goes here"
             android:layout_marginTop="10dp"
-            android:paddingLeft="20dp"
+            android:paddingLeft="30dp"
             android:textStyle="bold"/>
         <ListView
             android:id="@+id/steps_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:listSelector="@android:color/transparent">
         </ListView>
 
     </LinearLayout>
