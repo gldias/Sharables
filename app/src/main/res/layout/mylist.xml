@@ -11,7 +11,8 @@
         android:layout_height="60dp"
         android:padding="5dp" />
 
-    <LinearLayout android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="190dp"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
@@ -19,18 +20,19 @@
             android:id="@+id/recipeTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Medium Text goes here"
-            android:textAppearance="?android:attr/textAppearanceMedium"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp"
             android:padding="2dp"
+            android:text="Medium Text goes here"
+            android:textAppearance="?android:attr/textAppearanceMedium"
             android:textStyle="bold" />
+
         <TextView
             android:id="@+id/recipeAuthor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Text goes here"
-            android:layout_marginLeft="10dp" />
+            android:layout_marginLeft="10dp"
+            android:text="Text goes here" />
     </LinearLayout>
 
     <TextView
