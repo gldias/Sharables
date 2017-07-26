@@ -88,11 +88,13 @@ public class RecipeDetailsActivity extends AppCompatActivity {
                         new String[] {"IngredientName", "IngredientQuantity"},
                         new int[] {android.R.id.text1, android.R.id.text2});
         ingredientListView.setAdapter(ingredientAdapter);
+        ListViewHelper.getListViewSize(ingredientListView);
 
         ListView stepsListView = (ListView)findViewById(R.id.steps_list);
         ArrayAdapter<String> stepsAdapter = new ArrayAdapter<>(
                 this, android.R.layout.simple_list_item_1, steps);
-        stepsListView.setAdapter(stepsAdapter); //TODO: list not displaying all the steps
+        stepsListView.setAdapter(stepsAdapter);
+        ListViewHelper.getListViewSize(stepsListView);
 
     }
 

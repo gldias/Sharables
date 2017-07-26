@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
         HashMap<String, String> testIngredients = new HashMap<>();
         testIngredients.put("Bananas", "2 pieces");
+        testIngredients.put("Your hands", "Both of them");
 
         String testPreparation = "Buy some bananas";
 
