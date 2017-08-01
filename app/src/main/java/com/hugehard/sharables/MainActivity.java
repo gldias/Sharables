@@ -3,8 +3,10 @@ package com.hugehard.sharables;
 import android.app.Activity;
 import android.content.Intent;
 import android.media.Image;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.View;
@@ -21,11 +23,14 @@ public class MainActivity extends AppCompatActivity {
 
     public final static String EXTRA_MESSAGE = "com.hugehard.sharables.MESSAGE";
     List<Recipe> recipeList = new ArrayList<>();
+    private ListView listView;
+    private SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //Set up action bar
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
@@ -70,38 +75,24 @@ public class MainActivity extends AppCompatActivity {
 
         Recipe testRecipe9 = new Recipe("Blueberries", testAuthor, testTime, testIngredients, testPreparation, testSteps);
         recipeList.add(testRecipe9);
+
+        Recipe testRecipe10 = new Recipe("Lemons", testAuthor, testTime, testIngredients, testPreparation, testSteps);
+        recipeList.add(testRecipe10);
+
+        Recipe testRecipe11 = new Recipe("Limes", testAuthor, testTime, testIngredients, testPreparation, testSteps);
+        recipeList.add(testRecipe11);
         //End test recipes
 
-        ListView listView = (ListView)findViewById(R.id.list);
+        listView = (ListView)findViewById(R.id.list);
         RecipeListAdapter recipeListAdapter = new RecipeListAdapter(this, R.layout.mylist, recipeList);
         listView.setAdapter(recipeListAdapter);
 
         //Click listener for list items
+        //TODO: make this into its own method because it is used again below
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(MainActivity.this, RecipeDetailsActivity.class);
-                //Get the recipe at item position
-                Recipe recipe = recipeList.get(position);
-
-                //Get recipe data
-                String title = recipe.getTitle();
-                String author = recipe.getAuthor();
-                int time = recipe.getCookTime();
-                HashMap<String, String> ingredients = recipe.getIngredients();
-                String preparation = recipe.getPreparation();
-                ArrayList<String> steps = recipe.getSteps();
-
-                //Send recipe data to RecipeDetails Activity
-                intent.putExtra("title", title);
-                intent.putExtra("author", author);
-                intent.putExtra("time", time);
-                intent.putExtra("ingredients", ingredients);
-                intent.putExtra("preparation", preparation);
-                intent.putExtra("steps", steps);
-
-                //Start RecipeDetailsActivity
-                startActivity(intent);
+                sendRecipeClickDetails(recipeList, position);
             }
         });
 
@@ -110,7 +101,66 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
+
+            //Listen for queries and filter results
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    final List<Recipe> searchResults = new ArrayList<>();
+                    for (Recipe recipe : recipeList) { //TODO: modify to use database
+                        if (recipe.getTitle().toLowerCase().contains(query.toLowerCase())) {
+                            searchResults.add(recipe); //I know this is inefficient
+                        }
+                    }
+                    RecipeListAdapter searchAdapter = new RecipeListAdapter(MainActivity.this, R.layout.mylist, searchResults);
+                    listView.setAdapter(searchAdapter);
+                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            sendRecipeClickDetails(searchResults, position);
+                        }
+                    });
+
+                    return true;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    return false;
+                }
+            });
+        }
+
         return true;
+    }
+
+
+    public void sendRecipeClickDetails(List<Recipe> recipeList, int position) {
+        Intent intent = new Intent(MainActivity.this, RecipeDetailsActivity.class);
+        //Get the recipe at item position
+        Recipe recipe = recipeList.get(position);
+
+        //Get recipe data
+        String title = recipe.getTitle();
+        String author = recipe.getAuthor();
+        int time = recipe.getCookTime();
+        HashMap<String, String> ingredients = recipe.getIngredients();
+        String preparation = recipe.getPreparation();
+        ArrayList<String> steps = recipe.getSteps();
+
+        //Send recipe data to RecipeDetails Activity
+        intent.putExtra("title", title);
+        intent.putExtra("author", author);
+        intent.putExtra("time", time);
+        intent.putExtra("ingredients", ingredients);
+        intent.putExtra("preparation", preparation);
+        intent.putExtra("steps", steps);
+
+        //Start RecipeDetailsActivity
+        startActivity(intent);
     }
 
 }
