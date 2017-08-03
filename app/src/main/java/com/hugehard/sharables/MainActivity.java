@@ -15,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -85,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
         //End test recipes
 
         listView = (ListView)findViewById(R.id.list);
+        Collections.reverse(recipeList); //newest will show at the top of the list view
         RecipeListAdapter recipeListAdapter = new RecipeListAdapter(this, R.layout.mylist, recipeList);
         listView.setAdapter(recipeListAdapter);
 
