@@ -9,10 +9,12 @@
     tools:showIn="@layout/activity_new_recipe">
 
     <LinearLayout
+        android:id="@+id/new_recipe_top_level"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <!--Recipe name views-->
         <TextView
             android:id="@+id/recipe_name_header"
             android:layout_width="wrap_content"
@@ -28,7 +30,9 @@
             android:layout_marginRight="16dp"
             android:hint="Enter Recipe Name"
             android:inputType="text|textCapCharacters|textCapWords" />
+        <!--End recipe name views-->
 
+        <!--Recipe time views-->
         <TextView
             android:id="@+id/recipe_time_header"
             android:layout_width="wrap_content"
@@ -43,7 +47,9 @@
             android:layout_marginLeft="16dp"
             android:hint="Cook Time"
             android:inputType="number" />
+        <!--End recipe time views-->
 
+        <!--Recipe preparation views-->
         <TextView
             android:id="@+id/recipe_preparation_header"
             android:layout_width="wrap_content"
@@ -51,7 +57,6 @@
             android:layout_margin="@dimen/text_margin"
             android:text="How to prepare:"
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-
         <EditText
             android:id="@+id/recipe_preparation_input"
             android:layout_width="345dp"
@@ -60,6 +65,71 @@
             android:layout_marginRight="16dp"
             android:hint="Preparation"
             android:inputType="text|textCapCharacters|textCapWords|textCapSentences|textMultiLine" />
+        <!--End recipe preparation views-->
+
+        <!--Recipe ingredients views-->
+        <LinearLayout
+            android:id="@+id/new_recipe_ingredients"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/recipe_ingredients_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_margin"
+                android:text="Ingredients:"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+            <LinearLayout
+                android:id="@+id/recipe_ingredients_wrapper"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:id="@+id/recipe_ingredients_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <EditText
+                        android:id="@+id/recipe_ingredient_name_input"
+                        android:layout_width="192dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:hint="Ingredient Name"
+                        android:inputType="text|textCapCharacters|textCapWords"
+                        android:layout_weight="0.22" />
+                    <EditText
+                        android:id="@+id/recipe_ingredient_quant_input"
+                        app:layout_constraintLeft_toLeftOf="@id/recipe_ingredient_name_input"
+                        android:layout_width="148dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="16dp"
+                        android:hint="Quantity"
+                        android:inputType="text|textCapCharacters|textCapWords" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/add_new_ingredient_button"
+                android:layout_width="345dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:background="@color/colorPrimary"
+                android:elevation="4dp"
+                android:text="Add New Ingredient"
+                android:textColor="@android:color/white" />
+
+        </LinearLayout>
+        <!--End recipe ingredients views-->
+
+        <!--Recipe steps views-->
+        <!--End recipe steps views-->
 
     </LinearLayout>
 
