@@ -64,7 +64,7 @@
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:hint="Preparation"
-            android:inputType="text|textCapCharacters|textCapWords|textCapSentences|textMultiLine" />
+            android:inputType="text|textMultiLine" />
         <!--End recipe preparation views-->
 
         <!--Recipe ingredients views-->
@@ -85,7 +85,8 @@
             <LinearLayout
                 android:id="@+id/recipe_ingredients_wrapper"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
                 <LinearLayout
                     android:id="@+id/recipe_ingredients_input"
                     android:layout_width="match_parent"
@@ -99,7 +100,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="16dp"
                         android:hint="Ingredient Name"
-                        android:inputType="text|textCapCharacters|textCapWords"
+                        android:inputType="text"
                         android:layout_weight="0.22" />
                     <EditText
                         android:id="@+id/recipe_ingredient_quant_input"
@@ -108,7 +109,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginRight="16dp"
                         android:hint="Quantity"
-                        android:inputType="text|textCapCharacters|textCapWords" />
+                        android:inputType="text" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -129,7 +130,64 @@
         <!--End recipe ingredients views-->
 
         <!--Recipe steps views-->
+        <LinearLayout
+            android:id="@+id/new_recipe_steps"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/recipe_steps_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_margin"
+                android:text="How to Cook:"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+            <LinearLayout
+                android:id="@+id/recipe_steps_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginLeft="16dp">
+
+                <EditText
+                    android:id="@+id/recipe_step"
+                    android:layout_width="345dp"
+                    android:layout_height="wrap_content"
+                    android:hint="Step"
+                    android:inputType="text"
+                    android:layout_weight="0.22" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/add_new_step_button"
+                android:layout_width="345dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:background="@color/colorPrimary"
+                android:elevation="4dp"
+                android:text="Add New Step"
+                android:textColor="@android:color/white" />
+
+        </LinearLayout>
         <!--End recipe steps views-->
+
+        <!--Publish recipe button-->
+        <Button
+            android:id="@+id/publish_recipe_button"
+            android:layout_width="345dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="16dp"
+            android:background="@color/colorPrimaryDark"
+            android:elevation="4dp"
+            android:text="Publish Recipe"
+            android:textColor="@android:color/white"
+            android:textSize="24sp" />
 
     </LinearLayout>
 
