@@ -85,6 +85,21 @@ public class MainActivity extends AppCompatActivity {
         recipeList.add(testRecipe11);
         //End test recipes
 
+        //Get new recipes, if there are any
+        Intent intent = getIntent();
+        if (intent != null) { //TODO: appears as empty recipe in list and causes crash if clicked
+            String title = intent.getStringExtra("title");
+            int cookTime = intent.getIntExtra("time", 0); //default value for cookTime is 0
+            HashMap<String, String> ingredients =
+                    (HashMap<String, String>) intent.getSerializableExtra("ingredients");
+
+            String preparation = intent.getStringExtra("preparation");
+            ArrayList<String> steps = intent.getStringArrayListExtra("steps");
+
+            Recipe newRecipe = new Recipe(title, "Gui", cookTime, ingredients, preparation, steps);
+            recipeList.add(newRecipe);
+        }
+
         listView = (ListView)findViewById(R.id.list);
         Collections.reverse(recipeList); //newest will show at the top of the list view
         RecipeListAdapter recipeListAdapter = new RecipeListAdapter(this, R.layout.mylist, recipeList);
