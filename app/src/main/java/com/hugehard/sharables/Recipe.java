@@ -5,6 +5,8 @@ package com.hugehard.sharables;
  */
 
 import android.media.Image;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -12,12 +14,10 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
-public class Recipe {
+public class Recipe implements Parcelable{
     //TODO: Fix the way you store images
     //TODO: change ingredients to be a set
 
-    //Date is assigned at object creation (when recipe is uploaded)
-    private Date dateCreated = new Date();
     private String title;
     private String author;
     private int cookTime; //The cook time is represented in minutes
@@ -37,6 +37,39 @@ public class Recipe {
         this.steps = steps;
     }
 
+    private Recipe(Parcel in) {
+        this.title = in.readString();
+        this.author = in.readString();
+        this.cookTime = in.readInt();
+        //this.recipeImg = recipeImg;
+        this.ingredients = in.readHashMap(String.class.getClassLoader());
+        this.preparation = in.readString();
+        this.steps = in.readArrayList(String.class.getClassLoader());
+    }
+
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Parcelable.Creator<Recipe> CREATOR = new Parcelable.Creator<Recipe>() {
+        public Recipe createFromParcel(Parcel in) {
+            return new Recipe(in);
+        }
+
+        public Recipe[] newArray(int size) {
+            return new Recipe[size];
+        }
+    };
+
+    public void writeToParcel(Parcel out, int flags) {
+        out.writeString(this.title);
+        out.writeString(this.author);
+        out.writeInt(this.cookTime);
+        out.writeMap(this.ingredients);
+        out.writeString(this.preparation);
+        out.writeList(this.steps);
+    }
+
     /*
         Getters and setters
      */
@@ -47,14 +80,6 @@ public class Recipe {
 
     public void setAuthor(String author) {
         this.author = author;
-    }
-
-    public Date getDateCreated() {
-        return dateCreated;
-    }
-
-    public void setDateCreated(Date dateCreated) {
-        this.dateCreated = dateCreated;
     }
 
     public int getCookTime() {
@@ -102,7 +127,6 @@ public class Recipe {
     }
 
     public String getTitle() {
-
         return title;
     }
 

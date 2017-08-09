@@ -29,7 +29,7 @@
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:hint="Enter Recipe Name"
-            android:inputType="text|textCapCharacters|textCapWords" />
+            android:inputType="text" />
         <!--End recipe name views-->
 
         <!--Recipe time views-->

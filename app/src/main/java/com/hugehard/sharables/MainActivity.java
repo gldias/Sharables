@@ -24,95 +24,94 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity {
 
     public final static String EXTRA_MESSAGE = "com.hugehard.sharables.MESSAGE";
-    List<Recipe> recipeList = new ArrayList<>();
+    private static final RecipeDatabase recipeDatabase = new RecipeDatabase();
     private ListView listView;
     private SearchView searchView;
+    static final int NEW_RECIPE_REQUEST = 1; //request code for New Recipe form
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (savedInstanceState != null) {
+            ArrayList<Recipe> list = savedInstanceState.getParcelableArrayList("recipes");
+            recipeDatabase.setRecipeList(list);
+        }else if (savedInstanceState == null || !savedInstanceState.containsKey("recipes")) {
+            //Test recipes
+            String testTitle = "Bananas";
+            String testAuthor = "Gui";
+            int testTime = 20;
+
+            HashMap<String, String> testIngredients = new HashMap<>();
+            testIngredients.put("Bananas", "2 pieces");
+            testIngredients.put("Your hands", "Both of them");
+
+            String testPreparation = "Buy some bananas";
+
+            ArrayList<String> testSteps = new ArrayList<>();
+            testSteps.add("Take some bananas");
+            testSteps.add("Eat them!");
+
+            Recipe testRecipe = new Recipe(testTitle, testAuthor, testTime, testIngredients, testPreparation, testSteps);
+            recipeDatabase.addRecipe(testRecipe);
+
+            Recipe testRecipe2 = new Recipe("Apples", testAuthor, testTime, testIngredients, testPreparation, testSteps);
+            recipeDatabase.addRecipe(testRecipe2);
+
+            Recipe testRecipe3 = new Recipe("Oranges", testAuthor, testTime, testIngredients, testPreparation, testSteps);
+            recipeDatabase.addRecipe(testRecipe3);
+
+            Recipe testRecipe4 = new Recipe("PineapplesAndMorePineapples", testAuthor, testTime, testIngredients, testPreparation, testSteps);
+            recipeDatabase.addRecipe(testRecipe4);
+
+            Recipe testRecipe5 = new Recipe("Mangoes", testAuthor, testTime, testIngredients, testPreparation, testSteps);
+            recipeDatabase.addRecipe(testRecipe5);
+
+            Recipe testRecipe6 = new Recipe("Cherries", testAuthor, testTime, testIngredients, testPreparation, testSteps);
+            recipeDatabase.addRecipe(testRecipe6);
+
+            Recipe testRecipe7 = new Recipe("Clementines", testAuthor, testTime, testIngredients, testPreparation, testSteps);
+            recipeDatabase.addRecipe(testRecipe7);
+
+            Recipe testRecipe8 = new Recipe("Strawberries", testAuthor, testTime, testIngredients, testPreparation, testSteps);
+            recipeDatabase.addRecipe(testRecipe8);
+
+            Recipe testRecipe9 = new Recipe("Blueberries", testAuthor, testTime, testIngredients, testPreparation, testSteps);
+            recipeDatabase.addRecipe(testRecipe9);
+
+            Recipe testRecipe10 = new Recipe("Lemons", testAuthor, testTime, testIngredients, testPreparation, testSteps);
+            recipeDatabase.addRecipe(testRecipe10);
+
+            Recipe testRecipe11 = new Recipe("Limes", testAuthor, testTime, testIngredients, testPreparation, testSteps);
+            recipeDatabase.addRecipe(testRecipe11);
+            //End test recipes
+        }
+
         setContentView(R.layout.activity_main);
         //Set up action bar
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
-        //Test recipes
-        String testTitle = "Bananas";
-        String testAuthor = "Gui";
-        int testTime = 20;
-
-        HashMap<String, String> testIngredients = new HashMap<>();
-        testIngredients.put("Bananas", "2 pieces");
-        testIngredients.put("Your hands", "Both of them");
-
-        String testPreparation = "Buy some bananas";
-
-        ArrayList<String> testSteps = new ArrayList<>();
-        testSteps.add("Take some bananas");
-        testSteps.add("Eat them!");
-
-        Recipe testRecipe = new Recipe(testTitle, testAuthor, testTime, testIngredients, testPreparation, testSteps);
-        recipeList.add(testRecipe);
-
-        Recipe testRecipe2 = new Recipe("Apples", testAuthor, testTime, testIngredients, testPreparation, testSteps);
-        recipeList.add(testRecipe2);
-
-        Recipe testRecipe3 = new Recipe("Oranges", testAuthor, testTime, testIngredients, testPreparation, testSteps);
-        recipeList.add(testRecipe3);
-
-        Recipe testRecipe4 = new Recipe("PineapplesAndMorePineapples", testAuthor, testTime, testIngredients, testPreparation, testSteps);
-        recipeList.add(testRecipe4);
-
-        Recipe testRecipe5 = new Recipe("Mangoes", testAuthor, testTime, testIngredients, testPreparation, testSteps);
-        recipeList.add(testRecipe5);
-
-        Recipe testRecipe6 = new Recipe("Cherries", testAuthor, testTime, testIngredients, testPreparation, testSteps);
-        recipeList.add(testRecipe6);
-
-        Recipe testRecipe7 = new Recipe("Clementines", testAuthor, testTime, testIngredients, testPreparation, testSteps);
-        recipeList.add(testRecipe7);
-
-        Recipe testRecipe8 = new Recipe("Strawberries", testAuthor, testTime, testIngredients, testPreparation, testSteps);
-        recipeList.add(testRecipe8);
-
-        Recipe testRecipe9 = new Recipe("Blueberries", testAuthor, testTime, testIngredients, testPreparation, testSteps);
-        recipeList.add(testRecipe9);
-
-        Recipe testRecipe10 = new Recipe("Lemons", testAuthor, testTime, testIngredients, testPreparation, testSteps);
-        recipeList.add(testRecipe10);
-
-        Recipe testRecipe11 = new Recipe("Limes", testAuthor, testTime, testIngredients, testPreparation, testSteps);
-        recipeList.add(testRecipe11);
-        //End test recipes
-
-        //Get new recipes, if there are any
-        Intent intent = getIntent();
-        if (intent != null) { //TODO: appears as empty recipe in list and causes crash if clicked
-            String title = intent.getStringExtra("title");
-            int cookTime = intent.getIntExtra("time", 0); //default value for cookTime is 0
-            HashMap<String, String> ingredients =
-                    (HashMap<String, String>) intent.getSerializableExtra("ingredients");
-
-            String preparation = intent.getStringExtra("preparation");
-            ArrayList<String> steps = intent.getStringArrayListExtra("steps");
-
-            Recipe newRecipe = new Recipe(title, "Gui", cookTime, ingredients, preparation, steps);
-            recipeList.add(newRecipe);
-        }
+        //TODO: recipe list in main view multiplies each time you go back to the main page
+        //TODO: also, it is still not saving the created recipes
 
         listView = (ListView)findViewById(R.id.list);
-        Collections.reverse(recipeList); //newest will show at the top of the list view
-        RecipeListAdapter recipeListAdapter = new RecipeListAdapter(this, R.layout.mylist, recipeList);
-        listView.setAdapter(recipeListAdapter);
+        setListAdapter();
 
         //Click listener for list items
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                sendRecipeClickDetails(recipeList, position);
+                sendRecipeClickDetails(recipeDatabase.getRecipeList(), position);
             }
         });
 
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putParcelableArrayList("recipes", recipeDatabase.getRecipeList());
+        super.onSaveInstanceState(savedInstanceState);
     }
 
     @Override
@@ -127,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
                     final List<Recipe> searchResults = new ArrayList<>();
-                    for (Recipe recipe : recipeList) { //TODO: modify to use database
+                    for (Recipe recipe : recipeDatabase.getRecipeList()) { //TODO: modify to use database
                         if (recipe.getTitle().toLowerCase().contains(query.toLowerCase())) {
                             searchResults.add(recipe); //I know this is inefficient
                         }
@@ -159,10 +158,33 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.menu_add_recipe:
                 Intent intent = new Intent(MainActivity.this, NewRecipeActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, NEW_RECIPE_REQUEST);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+        switch (requestCode) {
+            case (NEW_RECIPE_REQUEST) : {
+                if (resultCode == Activity.RESULT_OK) {
+                    String title = intent.getStringExtra("title");
+                    int cookTime = intent.getIntExtra("time", 0); //default value for cookTime is 0
+                    HashMap<String, String> ingredients =
+                            (HashMap<String, String>) intent.getSerializableExtra("ingredients");
+
+                    String preparation = intent.getStringExtra("preparation");
+                    ArrayList<String> steps = intent.getStringArrayListExtra("steps");
+
+                    Recipe newRecipe = new Recipe(title, "Gui", cookTime, ingredients, preparation, steps);
+                    recipeDatabase.addRecipe(newRecipe);
+                    setListAdapter();
+                }
+            }
+            break;
         }
     }
 
@@ -190,6 +212,11 @@ public class MainActivity extends AppCompatActivity {
 
         //Start RecipeDetailsActivity
         startActivity(intent);
+    }
+
+    private void setListAdapter(){
+        RecipeListAdapter recipeListAdapter = new RecipeListAdapter(this, R.layout.mylist, recipeDatabase.getRecipeList());
+        listView.setAdapter(recipeListAdapter);
     }
 
 }

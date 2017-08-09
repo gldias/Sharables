@@ -1,5 +1,6 @@
 package com.hugehard.sharables;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -206,7 +207,6 @@ public class NewRecipeActivity extends AppCompatActivity {
             }
         }
 
-
         //Send recipe data to MainActivity
         intent.putExtra("title", title);
         intent.putExtra("time", cookTime);
@@ -215,6 +215,7 @@ public class NewRecipeActivity extends AppCompatActivity {
         intent.putExtra("steps", steps);
 
         //Start MainActivity
-        startActivity(intent);
+        setResult(Activity.RESULT_OK, intent); //TODO: if user cancels activity, send RESULT_CANCELED
+        finish();
     }
 }
